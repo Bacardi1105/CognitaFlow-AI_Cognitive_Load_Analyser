@@ -153,3 +153,7 @@ Check your `.env` file has a valid `OPENROUTER_API_KEY`. The app will fall back 
 
 **Port already in use?**  
 Edit the last line of `main.py` and change `port=8000` to another port.
+
+
+In case your .env File doesnt run make sure to save it as .env and not .env.text 
+Steps -> go to notepad and save the text file as .env thats all 
