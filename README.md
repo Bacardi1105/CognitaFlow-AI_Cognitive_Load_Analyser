@@ -9,7 +9,7 @@ A science-backed web application inspired by **NASA TLX** and **TSST** stress ev
 ### 1. Install dependencies
 
 ```bash
-cd cognitive_load_project
+cd     CognitaFlow-AI_Cognitive_Load_Analyser
 pip install -r requirements.txt
 ```
 
