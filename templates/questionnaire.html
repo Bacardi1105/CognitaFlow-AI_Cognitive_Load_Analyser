@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questionnaire – CognitaFlow</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/"><span>Cogn</span>itaFlow</a>
+  <div class="progress-bar">
+    <div class="progress-step done"></div>
+    <div class="progress-step done"></div>
+    <div class="progress-step done"></div>
+    <div class="progress-step active"></div>
+    <div class="progress-step"></div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-header fade-in">
+    <span class="tag">Step 4 of 5</span>
+    <h1>NASA-TLX <em>Questionnaire</em></h1>
+    <p>Rate each question honestly based on how you've felt recently. There are no right or wrong answers.</p>
+  </div>
+
+  <div id="loading-section" class="card fade-in text-center">
+    <div class="spinner"></div>
+    <p class="loading-text">Generating personalised questions with AI…</p>
+  </div>
+
+  <div id="questionnaire-section" class="card fade-in" style="display:none">
+    <div class="q-progress">
+      <div class="q-progress-fill" id="q-progress-fill" style="width:0%"></div>
+    </div>
+
+    <div class="question-counter" id="q-counter">Question 1 / 20</div>
+    <div class="dimension-tag" id="q-dimension-tag"></div>
+    <div class="question-text" id="q-text">Loading…</div>
+
+    <div class="rating-row" id="rating-row">
+      <div class="rating-btn" onclick="selectRating(1)">
+        <span class="num">1</span><span class="txt">Very Low</span>
+      </div>
+      <div class="rating-btn" onclick="selectRating(2)">
+        <span class="num">2</span><span class="txt">Low</span>
+      </div>
+      <div class="rating-btn" onclick="selectRating(3)">
+        <span class="num">3</span><span class="txt">Moderate</span>
+      </div>
+      <div class="rating-btn" onclick="selectRating(4)">
+        <span class="num">4</span><span class="txt">High</span>
+      </div>
+      <div class="rating-btn" onclick="selectRating(5)">
+        <span class="num">5</span><span class="txt">Very High</span>
+      </div>
+    </div>
+
+    <div class="flex gap-12">
+      <button class="btn btn-secondary" id="prev-btn" onclick="prevQuestion()" disabled>← Back</button>
+      <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" disabled>Next →</button>
+    </div>
+  </div>
+
+  <div id="submitting-section" class="card fade-in text-center" style="display:none">
+    <div class="spinner"></div>
+    <p class="loading-text">Calculating your cognitive load score…</p>
+  </div>
+</div>
+
+<script src="/static/questionnaire.js"></script>
+<script>
+  const SESSION_ID = "{{ session_id }}";
+  document.addEventListener('DOMContentLoaded', () => loadQuestions(SESSION_ID));
+</script>
+</body>
+</html>

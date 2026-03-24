@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Webcam Test – CognitaFlow</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/"><span>Cogn</span>itaFlow</a>
+  <div class="progress-bar">
+    <div class="progress-step done"></div>
+    <div class="progress-step active"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-header fade-in">
+    <span class="tag">Step 2 of 5</span>
+    <h1>Webcam <em>Eye Stress</em> Test</h1>
+    <p>We'll monitor blink rate, eye openness, and gaze stability for 30 seconds. Please look naturally at the screen.</p>
+  </div>
+
+  <div class="card fade-in">
+    <div id="permission-prompt">
+      <div class="alert alert-info">
+        Click <strong>Enable Camera</strong> to grant browser access. No video is stored or transmitted.
+      </div>
+      <button class="btn btn-primary" onclick="startWebcam()">Enable Camera →</button>
+    </div>
+
+    <div id="webcam-section" style="display:none">
+      <div id="video-container">
+        <video id="webcam-video" autoplay muted playsinline></video>
+        <div class="cam-overlay cam-corners"></div>
+        <canvas id="tracking-canvas" style="display:none"></canvas>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <span class="val" id="blink-display">—</span>
+          <span class="lbl">Blinks/min</span>
+        </div>
+        <div class="metric-box">
+          <span class="val" id="openness-display">—</span>
+          <span class="lbl">Eye Open %</span>
+        </div>
+        <div class="metric-box">
+          <span class="val" id="gaze-display">—</span>
+          <span class="lbl">Gaze Stable</span>
+        </div>
+      </div>
+
+      <div id="test-timer" class="text-center text-muted mb-24" style="display:none">
+        <span style="font-family:var(--font-head);font-size:40px;color:var(--accent)" id="countdown">30</span>
+        <span style="font-size:12px;letter-spacing:2px;display:block;margin-top:4px">SECONDS REMAINING</span>
+      </div>
+
+      <div id="webcam-controls" class="flex gap-12">
+        <button class="btn btn-primary" id="record-btn" onclick="startRecording()">Begin 30s Test →</button>
+      </div>
+
+      <div id="webcam-done" style="display:none">
+        <div class="alert alert-success">✓ Webcam analysis complete! Proceeding to voice test…</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/static/webcam.js"></script>
+<script>
+  const SESSION_ID = "{{ session_id }}";
+</script>
+</body>
+</html>

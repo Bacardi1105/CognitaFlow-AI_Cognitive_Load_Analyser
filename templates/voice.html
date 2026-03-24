@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voice Test – CognitaFlow</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/"><span>Cogn</span>itaFlow</a>
+  <div class="progress-bar">
+    <div class="progress-step done"></div>
+    <div class="progress-step done"></div>
+    <div class="progress-step active"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-header fade-in">
+    <span class="tag">Step 3 of 5</span>
+    <h1>Voice <em>Stress</em> Analysis</h1>
+    <p>Speak naturally for 30 seconds. We measure speech rate, pauses, and vocal patterns — not the content of what you say.</p>
+  </div>
+
+  <div class="card fade-in">
+    <div id="phase-read">
+      <div class="alert alert-info">
+        <strong>Phase 1:</strong> Please read the sentence below aloud clearly when you start recording.
+      </div>
+      <div class="card" style="margin:20px 0; background:var(--surface2)">
+        <p style="font-size:16px; line-height:1.8; font-style:italic; color:var(--text)">
+          "The quick brown fox jumps over the lazy dog near the riverbank at dawn."
+        </p>
+      </div>
+      <div class="alert alert-info mt-8">
+        <strong>Phase 2:</strong> Then speak freely for the remaining time about your day, your work, or anything you like.
+      </div>
+    </div>
+
+    <div class="waveform-container mt-16">
+      <canvas id="waveform-canvas"></canvas>
+    </div>
+
+    <div class="flex gap-12 items-center mt-16 mb-24">
+      <span class="status-pill" id="voice-status">⏺ Not recording</span>
+      <span id="voice-timer" style="font-family:var(--font-head);font-size:28px;color:var(--accent)">30</span>
+      <span style="font-size:11px;letter-spacing:1.5px;color:var(--muted)">SEC</span>
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-box">
+        <span class="val" id="wpm-display">—</span>
+        <span class="lbl">Words/min</span>
+      </div>
+      <div class="metric-box">
+        <span class="val" id="pause-display">—</span>
+        <span class="lbl">Pauses</span>
+      </div>
+      <div class="metric-box">
+        <span class="val" id="duration-display">—</span>
+        <span class="lbl">Speaking sec</span>
+      </div>
+    </div>
+
+    <div id="voice-permission">
+      <button class="btn btn-primary" onclick="requestMic()">Enable Microphone →</button>
+    </div>
+
+    <div id="voice-controls" style="display:none">
+      <button class="btn btn-primary" id="voice-btn" onclick="startVoice()">Start 30s Recording →</button>
+    </div>
+
+    <div id="voice-done" style="display:none">
+      <div class="alert alert-success">✓ Voice analysis complete!</div>
+      <button class="btn btn-primary mt-16" onclick="proceedToQuestionnaire()">Continue to Questionnaire →</button>
+    </div>
+  </div>
+</div>
+
+<script src="/static/voice.js"></script>
+<script>
+  const SESSION_ID = "{{ session_id }}";
+</script>
+</body>
+</html>

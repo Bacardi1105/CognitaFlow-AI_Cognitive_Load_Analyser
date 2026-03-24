@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CognitaFlow – Cognitive Load Assessment</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/"><span>Cogn</span>itaFlow</a>
+  <div class="progress-bar">
+    <div class="progress-step active"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-header fade-in">
+    <span class="tag">NASA TLX · TSST Inspired</span>
+    <h1>Measure Your<br><em>Cognitive Load</em></h1>
+    <p>A science-backed assessment combining webcam eye-tracking, voice stress analysis, and personalised AI questionnaires.</p>
+  </div>
+
+  <div class="features-grid fade-in">
+    <div class="feature-card">
+      <div class="feature-icon">👁️</div>
+      <h3>Webcam Eye Tracking</h3>
+      <p>Non-intrusive blink rate, eye openness, and gaze stability analysis via your browser camera.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎤</div>
+      <h3>Voice Stress Analysis</h3>
+      <p>Speech rate, pause detection, and vocal patterns reveal cognitive fatigue and stress levels.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧠</div>
+      <h3>AI Questionnaire</h3>
+      <p>20 questions generated specifically for your profession, inspired by the NASA Task Load Index.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Load Dashboard</h3>
+      <p>Visual breakdown of your cognitive load score with actionable interpretation.</p>
+    </div>
+  </div>
+
+  <div class="card fade-in">
+    <div class="card-title">
+      <div class="icon">🚀</div>
+      Begin Assessment
+    </div>
+    <p class="text-muted mt-8" style="margin-bottom:24px">
+      The assessment takes approximately 5–8 minutes. You will need camera and microphone access.
+    </p>
+
+    <div class="form-group">
+      <label>Your Profession</label>
+      <select id="profession-select">
+        <option value="">— Select your profession —</option>
+        <option value="Software Engineer">Software Engineer</option>
+        <option value="Doctor">Doctor</option>
+        <option value="Student">Student</option>
+        <option value="Manager">Manager</option>
+        <option value="Designer">Designer</option>
+        <option value="Teacher">Teacher</option>
+        <option value="Nurse">Nurse</option>
+        <option value="Lawyer">Lawyer</option>
+        <option value="Data Scientist">Data Scientist</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div class="form-group" id="other-group" style="display:none">
+      <label>Specify Profession</label>
+      <input type="text" id="custom-profession" placeholder="e.g. Pharmacist, Pilot, Chef...">
+    </div>
+
+    <div id="start-error" class="alert alert-danger" style="display:none">
+      Please select your profession before starting.
+    </div>
+
+    <button class="btn btn-primary btn-lg" id="start-btn" onclick="startAssessment()">
+      Start Assessment →
+    </button>
+  </div>
+
+  <p class="text-center text-muted mt-16" style="font-size:12px; padding-bottom:40px">
+    No data leaves your device except to the local server. Scores are stored locally only.
+  </p>
+</div>
+
+<script>
+  const select = document.getElementById('profession-select');
+  const otherGroup = document.getElementById('other-group');
+
+  select.addEventListener('change', () => {
+    otherGroup.style.display = select.value === 'Other' ? 'block' : 'none';
+  });
+
+  async function startAssessment() {
+    const err = document.getElementById('start-error');
+    err.style.display = 'none';
+
+    let profession = select.value;
+    if (!profession) { err.style.display = 'block'; return; }
+    if (profession === 'Other') {
+      profession = document.getElementById('custom-profession').value.trim();
+      if (!profession) { err.style.display = 'block'; return; }
+    }
+
+    const btn = document.getElementById('start-btn');
+    btn.disabled = true;
+    btn.textContent = 'Starting…';
+
+    try {
+      const res = await fetch('/api/session/start', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ profession })
+      });
+      const data = await res.json();
+      window.location.href = `/webcam?session_id=${data.session_id}`;
+    } catch (e) {
+      btn.disabled = false;
+      btn.textContent = 'Start Assessment →';
+      err.textContent = 'Failed to start session. Is the server running?';
+      err.style.display = 'block';
+    }
+  }
+</script>
+</body>
+</html>
